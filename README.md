@@ -1,6 +1,10 @@
 # regularExpressions
 
 ## 1. Basic Set
+## 2. Extende Set
+## 3. Find and Replace with Capture Groups 
+
+## 1. Basic Set
 
 ### 1.1 *
 
@@ -337,3 +341,84 @@ plywood
 redwood   XXX
 
 regex: (log|ply)wood
+
+
+## 3. Find and Replace with Capture Groups 
+
+#### 3.1. Example 1 
+
+1280x720 > 1280 pix by 720 pix
+1920x1080 > 1920 pix by 1080 pix
+1600x900 > 1600 pix by 900 pix
+1280x1024 > 1280 pix by 1024 pix
+800x600 > 800 pix by 600 pix
+1024x768 > 1024 pix by 768 pix
+
+([0-9]+)x([0-9]+) > \1 pix by \2 pix
+
+linux command: sed -r's/pattern/replacement/g'inputfile>
+sed /r'/([0-9]+)x([0-9]+)/\1 pix by \2 pix/g'
+
+#### 3.2 Firs name, last name Problem
+
+John Wallace > Wallace,John
+Steve King > King,Steve
+Martin Cook > Cook, Martin
+Adam Smith > Smith, Adam
+Irene Peter > Peter, Irene
+Alice Johnson >. Johnson, Alice 
+
+([a-zA-Z]+)\s([a-zA-Z]+) > \2,\1
+
+linux regex: sed -r 's/([a-zA-Z]+)\s([a-zA-Z]+/\2,\1/g' filename
+
+#### 3.3 The Clock Time Problem
+
+7:32 > 32 mins past 7
+6:12 > 12 mins past 6
+12:23 > 23 mins past 12
+1:23 > 23 mins past 1
+11:33 > 33 mins past 11
+4:21 > 21 mins past 4
+
+([0-9]{1,2}):([0-9]{2}) > \2 mins past \1
+
+linux regex: regex: sed -r 's/([0-9]{1,2}):([0-9]{2})/\2 mins past \1/g' filename
+
+#### 3.4 The Phone Number Problem 
+
+914.582.3013 > xxx.xxx.3013
+873.334.2589 > xxx.xxx.2589
+521.589.3147 > xxx.xxx.3147
+625.235.3698 > xxx.xxx.3698
+895.568.2145 > xxx.xxx.2145
+745.256.3369 > xxx.xxx.3369
+
+[0-9]{3}.\[0-9]{3}\.([0-9]{4}) > xxx.xxx.\1
+
+lixux regex: regex: sed -r 's/[0-9]{3}\.[0-9]{3}\.([0-9]{4})\xxx.xxx.\1
+
+#### 3.5 The Date Problem
+
+Jan 5th 1987 > 5-Jan-87
+Dec 26th 2010 > 26-Dec-10
+Mar 2nd 1923 > 2-Mar-23
+Oct 1st 2008 > 1-Oct-08
+Aug 3rd 2009 > 3-Aug-09
+Jun 10th 2001 > 10-Jun-01
+
+([a-zA-Z{3}])\s([0-9]{1,2})[a-z]{2}\s[0-9]{2}([0-9{2}]) > \2-\1-\3
+
+Linux regex: regex: sed -r 's/([a-zA-Z{3}])\s([0-9]{1,2})[a-z]{2}\s[0-9]{2}([0-9{2}])/\2-\1-\3/g' filename
+
+### 3.6 Another Phone Number Problem 
+
+(914).582.3013 > 914.582.3013
+(873).334.2589 > 873.334.2589
+(521).589.3147 > 521.589.3147
+(625).235.3698 > 625.235.3698
+(895).568.2145 > 895.568.2145
+
+\(([0-9]{3})\)(\.[0-9]{3}.\[0-9]{4}) > \1\2
+
+linux regex: sed -r 's/\(([0-9]{3})\)(\.[0-9]{3}.\[0-9]{4})/\1\2/g' filename
